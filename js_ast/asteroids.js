@@ -5,33 +5,32 @@
 var canvas = document.getElementById("canvas").getContext("2d");
 
 setInterval(draw, 16);
-window.addEventListener('keydown',doKeyDown,true);
+
 
 var keys = {
-    up: false,
-    down: false,
-    left: false,
-    right: false
+    up: false, 
+    down: false, 
+    left: false, 
+    right: false,
+
+    update: function (event) {
+	var down = event.type;
+
+	switch (event.keyCode) {
+	case 38:
+	    keys.up = down;
+	case 40:
+	    keys.down = down;
+	case 37:
+	    keys.left = down;
+	case 39:
+	    keys.right = down;
+	}
+    }
 };
 
-function doKeyDown(event){
-    switch (event.keyCode) {
-    case 38:
-	keys.up = true;
-	break;
-    case 40:
-	keys.down = true;
-	break;
-    case 37:
-	keys.left = true;
-	break;
-    case 39:
-	keys.right = true;
-	break;
-    }
-}
-
-
+window.addEventListener('keydown', keys.update(), true);
+window.addEventListener('keyup', keys.update(), true);
 
 var ship = {
     x: 200,
@@ -86,8 +85,6 @@ function clear() {
 
 function draw() {
   canvas.fillStyle = "#FAF7F8";
-    ship.draw();
-
 
 //    for(sprite in sprites)
 //    {
