@@ -4,24 +4,68 @@
 
 var canvas = document.getElementById("canvas").getContext("2d");
 
+setInterval(draw, 16);
+window.addEventListener('keydown',doKeyDown,true);
+
 var keys = {
     up: false,
     down: false,
     left: false,
     right: false
+};
+
+function doKeyDown(event){
+    switch (event.keyCode) {
+    case 38:
+	keys.up = true;
+	break;
+    case 40:
+	keys.down = true;
+	break;
+    case 37:
+	keys.left = true;
+	break;
+    case 39:
+	keys.right = true;
+	break;
+    }
 }
 
+
+
 var ship = {
-    x: 0,
-    y: 0,
+    x: 200,
+    y: 100,
     dx: 0,
     dy: 0,
 
     speed: 5,
-    size: 10
-}
+    size: 10,
 
-setInterval(draw, 16);
+    update: function (keys) {
+	if(keys.up)
+	{
+	    dx = speed;
+	}
+	
+	if(keys.left)
+	{
+	    dy = speed;
+	}
+
+	x += dx;
+	y += dy;
+    },
+
+    draw: function() { circle(x, y, size); },
+
+    clear: function () {
+    }
+};
+
+var asteroids = {
+    count: 0
+};
 
 function circle(x,y,r) {
   canvas.beginPath();
@@ -30,40 +74,42 @@ function circle(x,y,r) {
 }
 
 function rect(x,y,w,h) {
-  ctx.beginPath();
-  ctx.rect(x,y,w,h);
-  ctx.closePath();
-  ctx.fill();
+  canvas.beginPath();
+  canvas.rect(x,y,w,h);
+  canvas.closePath();
+  canvas.fill();
 }
 
 function clear() {
-  ctx.clearRect(0, 0, WIDTH, HEIGHT);
-}
-
-function init() {
-  canvas = document.getElementById("canvas");
-  ctx = canvas.getContext("2d");
-  return setInterval(draw, 10);
+  //canvas.clearRect(0, 0, 600, 400);
 }
 
 function draw() {
-  //clear all sprite rects
+  canvas.fillStyle = "#FAF7F8";
+    ship.draw();
 
-  //draw new sprites
 
-  clear();
-  ctx.fillStyle = "#FAF7F8";
-  rect(0,0,WIDTH,HEIGHT);
-  ctx.fillStyle = "#444444";
-  circle(x, y, 10);
+//    for(sprite in sprites)
+//    {
+//	clear(sprite);
+//	sprite.update();
+//	draw(sprite);
+//    }
 
+//  clear();
+
+//  rect(0,0,600,400);
+  canvas.fillStyle = "#444444";
+  //circle(x, y, 10);
+
+/*
   if (x + dx > WIDTH || x + dx < 0)
     dx = -dx;
   if (y + dy > HEIGHT || y + dy < 0)
     dy = -dy;
 
   x += dx;
-  y += dy;
+  y += dy;*/
 }
 
-init();
+document.write("_");
