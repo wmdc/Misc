@@ -1,11 +1,8 @@
-/*
- * Asteroids
- * by Michael Welsman-Dinelle */
+/* Asteroids */
 
 var canvas = document.getElementById("canvas").getContext("2d");
 
-setInterval(draw, 16);
-
+setInterval(update, 16);
 
 var keys = {
     up: false, 
@@ -14,23 +11,23 @@ var keys = {
     right: false,
 
     update: function (event) {
-	var down = event.type;
+	var kd = (event.type === "keydown");
 
 	switch (event.keyCode) {
 	case 38:
-	    keys.up = down;
+	    keys.up = kd;
 	case 40:
-	    keys.down = down;
+	    keys.down = kd;
 	case 37:
-	    keys.left = down;
+	    keys.left = kd;
 	case 39:
-	    keys.right = down;
+	    keys.right = kd;
 	}
     }
 };
 
-window.addEventListener('keydown', keys.update(), true);
-window.addEventListener('keyup', keys.update(), true);
+window.addEventListener('keydown', keys.update, false);
+window.addEventListener('keyup', keys.update, false);
 
 var ship = {
     x: 200,
@@ -38,28 +35,49 @@ var ship = {
     dx: 0,
     dy: 0,
 
-    speed: 5,
+    accel: 0.5,
     size: 10,
 
     update: function (keys) {
-	if(keys.up)
-	{
-	    dx = speed;
-	}
-	
-	if(keys.left)
-	{
-	    dy = speed;
+	if(keys.left) {
+	    this.dx -= this.accel;
 	}
 
-	x += dx;
-	y += dy;
+	if(keys.right) {
+	    this.dx += this.accel;
+	}
+
+	if(keys.up) {
+	    this.dy -= this.accel;
+	}
+
+	if(keys.down) {
+	    this.dy += this.accel;
+	}
+
+/*	if(keys.left) {
+	    this.dx = -this.speed;
+	} else if(keys.right) {
+	    this.dx = this.speed;
+	} else if(!keys.left && !keys.right) {
+	    this.dx = 0;
+	}
+
+	if(keys.up) {
+	    this.dy = -this.speed;
+	} else if(keys.down) {
+	    this.dy = this.speed;
+	} else if(!keys.up && !keys.down) {
+	    this.dy = 0;
+	}*/
+
+	this.x += this.dx;
+	this.y += this.dy;
     },
 
-    draw: function() { circle(x, y, size); },
+    draw: function() { circle(this.x, this.y, this.size); },
 
-    clear: function () {
-    }
+    clear: function () { circle(this.x, this.y, this.size + 2); }
 };
 
 var asteroids = {
@@ -83,30 +101,14 @@ function clear() {
   //canvas.clearRect(0, 0, 600, 400);
 }
 
-function draw() {
-  canvas.fillStyle = "#FAF7F8";
+function update() {
+    canvas.fillStyle = "#FFFFFF";
+    ship.clear();
 
-//    for(sprite in sprites)
-//    {
-//	clear(sprite);
-//	sprite.update();
-//	draw(sprite);
-//    }
+    ship.update(keys);
 
-//  clear();
-
-//  rect(0,0,600,400);
-  canvas.fillStyle = "#444444";
-  //circle(x, y, 10);
-
-/*
-  if (x + dx > WIDTH || x + dx < 0)
-    dx = -dx;
-  if (y + dy > HEIGHT || y + dy < 0)
-    dy = -dy;
-
-  x += dx;
-  y += dy;*/
+    canvas.fillStyle = "#444444";
+    ship.draw();
 }
 
 document.write("_");
