@@ -18,24 +18,7 @@ for i in range(len(v)):
     v[i] = random.gauss(0, 3)
     p[i] = random.gauss(window.width / 2, window.width / 3)
 
-#v = [window.width / 2, window.height / 2]
-
-vertices_gl = (GLfloat * len(p))(*p)
-
-glPointSize(5)
-
-glEnableClientState(GL_VERTEX_ARRAY)
-glVertexPointer(2, GL_FLOAT, 0, vertices_gl)
-
-#TODO: glVertexPointer is deprecated -- figure out how to use this style
-
-#positionBufferObject = GLuint()
-
-#glGenBuffers(1, positionBufferObject)
-#glBindBuffer(GL_ARRAY_BUFFER, positionBufferObject)
-#glBufferData(GL_ARRAY_BUFFER, len(v)*4, vertices_gl, GL_DYNAMIC_DRAW)
-
-#glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0)
+glPointSize(5.0)
 
 @window.event
 def on_mouse_press(x, y, button, modifiers):
@@ -63,29 +46,23 @@ def on_key_press(symbol, modifiers):
 @window.event
 def on_draw():
     for i in range(len(v)):
-        vertices_gl[i] += v[i]
+        p[i] += v[i]
 
-        if vertices_gl[i] < 0:
-            vertices_gl[i] = 0
+        if p[i] < 0:
+            p[i] = 0
             v[i] = -v[i]*cr
 
-        if (i % 2 == 0) & (vertices_gl[i] > window.width):
-            vertices_gl[i] = window.width
+        if (i % 2 == 0) & (p[i] > window.width):
+            p[i] = window.width
             v[i] = -v[i]*cr
-        elif (i % 2 == 1) & (vertices_gl[i] > window.height):
-            vertices_gl[i] = window.height
+        elif (i % 2 == 1) & (p[i] > window.height):
+            p[i] = window.height
             v[i] = -v[i]*cr
 
 
     glClear(GL_COLOR_BUFFER_BIT)
     glLoadIdentity()
-    glDrawArrays(GL_POINTS, 0, len(v) // 2)
 
-#    glBindBuffer(GL_ARRAY_BUFFER, positionBufferObject)
-#    glEnableVertexAttribArray(0)
-#    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, vertices_gl)
-#    glDrawArrays(GL_POINTS, 0, len(v) // 2)
-#    glDisableVertexAttribArray(0)
-
+    pyglet.graphics.draw(n_pts, pyglet.gl.GL_POINTS, ('v2f', p))
 
 pyglet.app.run()
