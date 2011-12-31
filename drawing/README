@@ -1,0 +1,255 @@
+This project is a CAD-like package for drawing simple vector graphics with lines, splines, ellipses, etc. Original documentation follows below.
+
+----
+
+Graphics Package Final Documentation
+April 10, 2006
+
+Graphics Package User Manual
+
+1.0 About the package
+This graphics package was written in Java and is depolyed as an executable JAR file.
+
+1.1 System Requirements
+This package was written to be used with Java 1.4.2. It can be run on any platform,
+including Windows, UNIX, or Max OS X, that has the full Java 1.4.2 (or newer) runtime
+installed. If the system’s hardware is sufficient to start up the Java runtime then it should be
+sufficient to start the graphics package. However, the following are recommended system
+requirements for good performance:
+-256 MB of RAM free
+-1.0 GHz Pentium 4 or G4 processor or equivalent.
+
+1.2 Installing and running the package
+The Java runtime, version 1.4.2 or newer, is required to run this package. If it is not
+installed, it can be obtained from <http://java.sun.com>. Most newer systems should come with
+an appropriate version of Java pre-installed.
+The package stored in a file called GraphicsPackage.jar. On a Windows or Max OS X
+system, it can be launched simply by executing the file. In a UNIX or Mac OS X terminal, the
+package can be launched with the following command:
+java GraphicsPackage
+
+2.0 Using the package
+When the graphics package is launched, three windows appear. The largest window is the
+main viewing area, which provides the user with a window into the world that is modelled by the
+package. Small red crosshairs designate the current position, which is used in conjunction with
+many drawing commands.
+The two remaining windows are the command window and the toolbar. The command
+window contains a single text field and is where users can enter most of the commands to draw
+shapes or perform other operations. The toolbar contains a hierarchical tree display of the data
+structure used to model the world as well as a number of buttons. The user can click on either
+the fill colour or line colour buttons to bring up colour choosers to pick the current fill or line
+colours that will be used for drawing new shapes and to change the colours of selected shapes.
+The user can also select elements in the hierarchical data structure display to either delete, group,
+or ungroup them. The hierarchical display is also used to select objects to be affected by certain
+commands typed into the command window, such as transformations or insertion.
+Finally, the user can zoom in their world view by double clicking on the world window or
+pan by dragging. A standard double click zooms in around the cursor point and holding the
+
+alt/command key zooms out. These operations can alternatively be performed by typing the
+zoom or pan commands that are described in the next section.
+
+2.1 About text commands
+There are a large number of commands that can be typed into the command window in
+order to perform operations within the graphics package. Command names are case-insensitive
+and a command is entered with the return or enter keys. Some commands have arguments.
+Arguments are typed after the command name and are delimited by spaces. The overall structure
+is:
+<commandName> <arg1> <arg2> ... <return>
+There are a number of concepts that are important to understanding how commands
+work, the first being the world window and current position. All objects are defined in real world
+space and the world window defines which section of this two-dimensional space is displayed on
+the screen. This section can be moved with the pan command by changing the coordinates of the
+world window or scaled up or down with the zoom command. The current position is a position
+in real world coordinates which is used as the origin for all “relative” drawing commands. The
+current position is also updated whenever a new object is created, and is drawn on the screen
+with small red crosshairs if it falls within the world window.
+The next concept important for some commands is selection. Selection is accomplished
+with the heirarchical data display explained earlier. When the user clicks, shift-clicks, or
+alt/command-clicks on an element in the display, it is added or removed from the set of currently
+selected items. Certain commands are executed on the current set of objects.
+Finally, fill and line colours can also be selected by the user either with the fillcol/linecol
+text commands or with the colour buttons on the toolbar. The chosen colours are the colours that
+new shapes will be drawn with.
+
+3.0 List of commands
+Drawing Commands
+Relative Polygon - polyrel <dx1> <dy1> ... <dxn> <dyn>
+Draw a polygon relative to the current position. Each new [x, y] point represents
+a translation from the last given point.
+Absolute Polygon- polyabs <x1> <y1> ... <xn> <yn>
+Draw a polygon with the given points.
+Relative Line- linerel <x1> <y1> <x2> <y2>
+Draw a line with the following points relative to the current position.
+
+Absolute Line- lineabs <x1> <y1> <x2> <y2>
+Draw a line with the given endpoints.
+
+Line To- lineto <x1> <y1>
+Draw a line from the current position to the given point.
+Relative Circle- circrel <x1> <y1> <radius>
+Draw a circle at a point relative to the current position with the given radius.
+Absolute Circle- circabs <x1> <y1> <radius>
+Draw a circle at the given point with the given radius.
+Relative String- strrel <text> <x1> <y1> <width> <height>
+Draw a string with the given text at a point relative to the current position. The
+width and height are the width and height of the entire block of text.
+Absolute String- strabs <text> <x1> <y1> <width> <height>
+Draw a string at the given position.
+Commands for Altering Shapes
+Apply Translation - translate <dx> <dy>
+Translate the currently-selected objects by the given amount.
+Apply Rotation - rotate <theta> <originX> <originY> *or* rotate <theta>
+Rotate the currently-selected objects by theta degrees about the given point.
+If the originX/originY arguments are omitted, the current position will be used
+as the origin.
+Apply Scaling - scale <xFactor> <yFactor> <originX> <originY>
+*or* scale <xFactor> <yFactor>
+Scale the objects by the given factors about the given point. Note that if the
+given point is not in the centre of the selected objects, they will also move. Note
+that only circle radii are scaled. A circle radius is scaled by the average of the X
+and Y factors, so equal X and Y factors can be used to provide a radius factor. If
+the originX/originY arguments are omitted, the current position will be used
+as the origin.
+Remove Polygon Vertex - polyremove <index>
+Remove the point at the given index from the selected polygon.
+
+Insert Polygon Vertex - polyinsert <x1> <x2> <index>
+Insert the given point into the selected polygon at the given index.
+Change Character - char <char> <index>
+Change the character at the given index in the selected string.
+
+Commands for Affecting World Parameters
+Relative Move - moverel <dx> <dy>
+Move the current position by the given amount.
+Absolute Move - moveabs <x> <y>
+Move the current position to the given location.
+Centre - centre
+Move the current position to the location in world coordinates that is at the centre
+of the viewport.
+Set Line Colour - linecol <r> <g> <b>
+Set the line colour to the given RGB value. This can also be done by clicking on
+the line colour button on the toolbar. Changing the line colour will affect the line
+colour of selected objects.
+Set Fill Color - fillcol <r> <g> <b>
+Set the fill colour to the given RGB value. This can also be done by clicking on
+the fill colour button on the toolbar. Changing the fill colour will affect the fill
+colour of selected objects.
+Re-intialize Viewport - init
+Reset the viewport to defaults. The viewport will include all points between
+[-10, -10] and [10,10] and the current position will be located at [0, 0].
+Refresh Viewport - refresh
+Redraws the viewport. This is done automatically after any operation that affects
+the data structure or viewport parameters.
+Pan Viewport - pan <dx> <dy>
+Shift the viewport by the given amount.
+
+Zoom Viewport - zoom <%>
+Zoom in by the given percent.
+Set Viewport Size - winsize <pixels>
+Set the window height and width to the given pixel value. Window height and
+width are always equal so that the aspect ratio of the world window is maintained.
+Move Clipping Boundaries - moveclip <xMin> <xMax> <yMin> <yMax>
+Move the clipping boundaries. Useful for testing.
+Restore Clipping Boundaries - restoreclip
+Restore the clipping boundaries to the viewport boundaries.
+IO and Miscellaneous Commands
+Clear Data Structure - clear
+Remove all contents of the data structure.
+Save Data Structure - save <fileName>
+Save the contents of the data structure to the given location.
+
+Save Selected Objects - saveselection <fileName>
+Save the currently-selected items to the given location.
+Append File to Data Structure - load <fileName>
+Append the contents of the given graphics package file to the data structure.
+The file must have been created by this graphics package.
+Quit - quit
+Quit the graphics package.
+
+Code Structure
+The graphics package is written in Java and is divided into three packages: Graphics.Real,
+Graphics.Screen, and Graphics.Interface. Generally speaking, anything having to do with the
+world model or world coordinates is found in the Real package. Classes that support screen
+drawing or operations in screen coordinates are found in the Screen package. Interface elements
+such as the toolbar window are defined in the Interface package.
+The Graphics.Real package includes the Group, RealCharacter, RealCircle, RealPoint,
+RealPolygon, RealSegment, and RealString classes. These all define objects which can be put into
+the main data structure that is contained in the RealWorld class. The RealWorld class includes
+the data structure as well as a pointer to a RealViewingArea which defines the viewport and a
+number of methods for modifying the data structure or world parameters. Other classes in the
+Real package include RealClipper, RealShape, and WorldListener. RealClipped provides a static
+way of clipping all objects found in the data structure. RealShape and WorldListener are
+interfaces which define properties for drawable objects and objects that can listen for changes to
+the world.
+The Graphics.Screen package is somewhat smaller and only includes primitives that are
+actually defined in screen coordinates and can be drawn directly to the ScreenViewport, which is
+a canvas. These primitives include the ScreenCircle, ScreenPoint, ScreenPolygon, and
+ScreenSegment classes. The ColouredPixel class defines a single pixel that can be modified on the
+canvas and the Drawable interface is implemented by all classes that can be drawn directly to the
+canvas. The ScreenFiller class is similar to the RealClipper class and also applies filling to
+polygons in the data structure, applying the final step to the graphics “pipeline” that is
+employed for each redraw.
+The Graphics.Interface package is the final piece and includes one class per user interface
+component, aside from the main window. The CommandEngine class defines the window used
+for command line input and also parses commands. The Toolbar class defines the toolbar
+window, which allows the user to change the current line and fill colours and includes a
+hierarchical tree representation of the data structure. Finally, the ViewportControl class can be
+linked to a main world window to allow the user to pan by dragging their mouse and zoom by
+double clicking.
+The Demos package in this release only includes the Final class, which is the entry point
+of the graphics package. It simply builds the necessary user interface components and starts up
+the application.
+
+Data Structures
+The main data structure for this graphics package is build around ArrayLists and the
+Group class, which is a simple extension of the ArrayList. Both classes allow for insertion of
+any object at any position, including other ArrayLists or Groups. This means that the data
+structure is naturally recursive and supports recursive grouping and transformations.
+The elements added to the data structure maintained in the RealWorld class are all found
+in the Graphics.Real package and include objects representing drawable elements such as
+polygons, circles, lines, or text, as well as groups. Many drawable objects are themselves built
+from other drawable objects (e.g. a polygon is a set of line segments) and so they have methods
+that can be used to obtain these more fundamental building blocks. However, objects such as
+polygons are all included in the data structure as polygons rather than their constituent pieces
+because they contain extra information needed for filling, clipping, or transformations.
+Whenever the data structure is altered, the RealWorld class automatically triggers a
+window refresh. The data structure is passed through a pipeline where it is manipulated to
+obtain the final pixels that are drawn on screen. First, the data structure is cloned and clipped so
+that only visible objects are processed for drawing. Next, everything contained in the structure is
+translated to screen coordinates. Finally, fill routines are applied to polygons and screen objects
+are queried for the set of pixels that they include (employing the Bresenham algorithms, etc.).
+Once the pixel set is obtained, it is drawn to the viewport and the user sees the world data that
+falls within its boundaries.
+
+Future Enhancements
+The following are useful extra features or improvements that could be added to the
+graphics package in the future, roughly in order of decreasing importance:
+-Drag and drop functionality for the tree view, preserve selections in the tree view
+Currently, users cannot directly affect the drawing order of shapes once they are created,
+and grouping is more complicated than it needs to be. If the tree display were fully functional it
+would allow users to drop objects onto groups and change the order of objects within the data
+structure. Selections should also be preserved when the data structure changes and tree is regenerated.
+- Circle clipping
+In the current graphics package, only trivial circle clipping is implemented (i.e. clipped if
+no point of the circle is within the viewport). If a circle is drawn partly within the viewport, all
+of its points are processed.
+- GUI controls for all text commands
+The original version of the graphics package only had command-line input without a
+toolbar or mouse input for zooming and panning. Ideally, the whole graphics package would be
+controlled through GUI components and the command window would not be needed.
+
+- Curves/Splines and Ovals
+These are some other primitives that could be supported by the graphics package.
+- Multiple viewports and multiple files
+It would be useful to allow the user to open multiple windows displaying the same data
+so they could view different pieces of it simultaneously. Similarly, it would be useful to allow
+users to open several files at once to compare or merge them.
+-Gradient filling, pattern filling
+Another possible extra feature would be gradient or pattern filling for polygons and
+circles.
+- Mouse selection and manipulation
+Rather than using the tree display, it would be much easier for the user to select and
+manipulate objects simply by clicking on them in the viewport. This approach, however, is
+problematic since objects can be small or can overlap. Mouse accuracy is also only to a single
+pixel, which could theoretically cover many units of world space. For this reason, full mouse
+interaction is a lower priority.
