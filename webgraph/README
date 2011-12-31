@@ -1,0 +1,77 @@
+I recently found this old project from circa 2005.
+
+-----
+
+CSCI 4173 Assignment 4 - Web Crawler
+
+by Michael Welsman-Dinelle
+
+
+This web crawler was written in Java.  To run it, make sure that your current directory is correct and input the following command:
+
+      java webcrawler.jar http://torch.cs.dal.ca:65400
+
+The URL given could be any URL of a website to be crawled.
+
+Pages will be requested at the rate of one per second max (so it takes a long time to crawl large sites).  The order of pages visited is output along with various representations of the web graph, converted distance matrix, CID, COD, and compactness.
+
+HTML Parser (http://htmlparser.sourceforge.net/) was used to download and parse the HTML files.  I also wrote a class to download files but ended up not using it.
+
+Some sample output (the errors are from rejected URL links to dynamic content):
+
+
+Crawling http://torch.cs.dal.ca:65400
+Visiting http://torch.cs.dal.ca:65400.  Found links: [http://torch.cs.dal.ca:65400/cal.html, http://torch.cs.dal.ca:65400/cal2.html, http://torch.cs.dal.ca:65400/fun.html, http://torch.cs.dal.ca:65400/links.html, http://torch.cs.dal.ca:65400/index.html]
+Visiting http://torch.cs.dal.ca:65400/cal.html.  Found links: [http://torch.cs.dal.ca:65400/\"cal.html?month=", http://torch.cs.dal.ca:65400/index.html, http://torch.cs.dal.ca:65400/cal2.html, http://torch.cs.dal.ca:65400/fun.html, http://torch.cs.dal.ca:65400/links.html]
+Visiting http://torch.cs.dal.ca:65400/cal2.html.  Found links: [http://torch.cs.dal.ca:65400/\"cal2.html?month=", http://torch.cs.dal.ca:65400/index.html, http://torch.cs.dal.ca:65400/cal.html, http://torch.cs.dal.ca:65400/fun.html, http://torch.cs.dal.ca:65400/links.html]
+Visiting http://torch.cs.dal.ca:65400/fun.html.  Found links: [http://torch.cs.dal.ca:65400/fun2.html, http://torch.cs.dal.ca:65400/index.html, http://torch.cs.dal.ca:65400/cal.html, http://torch.cs.dal.ca:65400/cal2.html, http://torch.cs.dal.ca:65400/links.html]
+Visiting http://torch.cs.dal.ca:65400/links.html.  Found links: [http://torch.cs.dal.ca:65400/index.html, http://torch.cs.dal.ca:65400/cal.html, http://torch.cs.dal.ca:65400/cal2.html, http://torch.cs.dal.ca:65400/fun.html]
+Visiting http://torch.cs.dal.ca:65400/index.html.  Found links: [http://torch.cs.dal.ca:65400/cal.html, http://torch.cs.dal.ca:65400/cal2.html, http://torch.cs.dal.ca:65400/fun.html, http://torch.cs.dal.ca:65400/links.html, http://torch.cs.dal.ca:65400/index.html]
+org.htmlparser.util.ParserException: Exception getting input stream from http://torch.cs.dal.ca:65400/\"cal.html?month=" (http://torch.cs.dal.ca:65400/\"cal.html?month=").
+Visiting http://torch.cs.dal.ca:65400/\"cal.html?month=".  Found links: null
+org.htmlparser.util.ParserException: Exception getting input stream from http://torch.cs.dal.ca:65400/\"cal2.html?month=" (http://torch.cs.dal.ca:65400/\"cal2.html?month=").
+Visiting http://torch.cs.dal.ca:65400/\"cal2.html?month=".  Found links: null
+Visiting http://torch.cs.dal.ca:65400/fun2.html.  Found links: [http://torch.cs.dal.ca:65400/index.html, http://torch.cs.dal.ca:65400/cal.html, http://torch.cs.dal.ca:65400/cal2.html, http://torch.cs.dal.ca:65400/fun.html, http://torch.cs.dal.ca:65400/links.html]
+Edge list: 
+[[http://torch.cs.dal.ca:65400, http://torch.cs.dal.ca:65400/cal.html], [http://torch.cs.dal.ca:65400, http://torch.cs.dal.ca:65400/cal2.html], [http://torch.cs.dal.ca:65400, http://torch.cs.dal.ca:65400/fun.html], [http://torch.cs.dal.ca:65400, http://torch.cs.dal.ca:65400/links.html], [http://torch.cs.dal.ca:65400, http://torch.cs.dal.ca:65400/index.html], [http://torch.cs.dal.ca:65400/cal.html, http://torch.cs.dal.ca:65400/\"cal.html?month="], [http://torch.cs.dal.ca:65400/cal.html, http://torch.cs.dal.ca:65400/index.html], [http://torch.cs.dal.ca:65400/cal.html, http://torch.cs.dal.ca:65400/cal2.html], [http://torch.cs.dal.ca:65400/cal.html, http://torch.cs.dal.ca:65400/fun.html], [http://torch.cs.dal.ca:65400/cal.html, http://torch.cs.dal.ca:65400/links.html], [http://torch.cs.dal.ca:65400/cal2.html, http://torch.cs.dal.ca:65400/\"cal2.html?month="], [http://torch.cs.dal.ca:65400/cal2.html, http://torch.cs.dal.ca:65400/index.html], [http://torch.cs.dal.ca:65400/cal2.html, http://torch.cs.dal.ca:65400/cal.html], [http://torch.cs.dal.ca:65400/cal2.html, http://torch.cs.dal.ca:65400/fun.html], [http://torch.cs.dal.ca:65400/cal2.html, http://torch.cs.dal.ca:65400/links.html], [http://torch.cs.dal.ca:65400/fun.html, http://torch.cs.dal.ca:65400/fun2.html], [http://torch.cs.dal.ca:65400/fun.html, http://torch.cs.dal.ca:65400/index.html], [http://torch.cs.dal.ca:65400/fun.html, http://torch.cs.dal.ca:65400/cal.html], [http://torch.cs.dal.ca:65400/fun.html, http://torch.cs.dal.ca:65400/cal2.html], [http://torch.cs.dal.ca:65400/fun.html, http://torch.cs.dal.ca:65400/links.html], [http://torch.cs.dal.ca:65400/links.html, http://torch.cs.dal.ca:65400/index.html], [http://torch.cs.dal.ca:65400/links.html, http://torch.cs.dal.ca:65400/cal.html], [http://torch.cs.dal.ca:65400/links.html, http://torch.cs.dal.ca:65400/cal2.html], [http://torch.cs.dal.ca:65400/links.html, http://torch.cs.dal.ca:65400/fun.html], [http://torch.cs.dal.ca:65400/index.html, http://torch.cs.dal.ca:65400/cal.html], [http://torch.cs.dal.ca:65400/index.html, http://torch.cs.dal.ca:65400/cal2.html], [http://torch.cs.dal.ca:65400/index.html, http://torch.cs.dal.ca:65400/fun.html], [http://torch.cs.dal.ca:65400/index.html, http://torch.cs.dal.ca:65400/links.html], [http://torch.cs.dal.ca:65400/index.html, http://torch.cs.dal.ca:65400/index.html], [http://torch.cs.dal.ca:65400/fun2.html, http://torch.cs.dal.ca:65400/index.html], [http://torch.cs.dal.ca:65400/fun2.html, http://torch.cs.dal.ca:65400/cal.html], [http://torch.cs.dal.ca:65400/fun2.html, http://torch.cs.dal.ca:65400/cal2.html], [http://torch.cs.dal.ca:65400/fun2.html, http://torch.cs.dal.ca:65400/fun.html], [http://torch.cs.dal.ca:65400/fun2.html, http://torch.cs.dal.ca:65400/links.html]]
+
+Vertex list: 
+[http://torch.cs.dal.ca:65400, http://torch.cs.dal.ca:65400/cal.html, http://torch.cs.dal.ca:65400/cal2.html, http://torch.cs.dal.ca:65400/fun.html, http://torch.cs.dal.ca:65400/links.html, http://torch.cs.dal.ca:65400/index.html, http://torch.cs.dal.ca:65400/\"cal.html?month=", http://torch.cs.dal.ca:65400/\"cal2.html?month=", http://torch.cs.dal.ca:65400/fun2.html]
+
+Adjacency matrix: 
+| 0 1 1 1 1 1 0 0 0 |
+| 0 0 1 1 1 1 1 0 0 |
+| 0 1 0 1 1 1 0 1 0 |
+| 0 1 1 0 1 1 0 0 1 |
+| 0 1 1 1 0 1 0 0 0 |
+| 0 1 1 1 1 1 0 0 0 |
+| 0 0 0 0 0 0 0 0 0 |
+| 0 0 0 0 0 0 0 0 0 |
+| 0 1 1 1 1 1 0 0 0 |
+
+Shortest Path matrix: 
+| 0 1 1 1 1 1 0 0 0 |
+| 0 0 1 1 1 1 0 0 0 |
+| 0 1 0 1 1 1 0 0 0 |
+| 0 1 1 0 1 1 0 0 1 |
+| 0 1 1 1 0 1 0 0 0 |
+| 0 1 1 1 1 1 0 0 0 |
+| 0 0 0 0 0 0 0 0 0 |
+| 0 0 0 0 0 0 0 0 0 |
+| 0 1 1 1 1 1 0 0 0 |
+
+Converted distance matrix: 
+| 0 1 1 1 1 1 9 9 9 |
+| 9 0 1 1 1 1 9 9 9 |
+| 9 1 0 1 1 1 9 9 9 |
+| 9 1 1 0 1 1 9 9 1 |
+| 9 1 1 1 0 1 9 9 9 |
+| 9 1 1 1 1 0 9 9 9 |
+| 9 9 9 9 9 9 0 9 9 |
+| 9 9 9 9 9 9 9 0 9 |
+| 9 1 1 1 1 1 9 9 0 |
+
+CID: | 32 40 40 32 40 40 72 72 32 |
+COD: | 72 24 24 24 24 24 72 72 64 |
+
+Compactness (Cp): 0.4305555555555556
