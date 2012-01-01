@@ -24,3 +24,20 @@ def elements(word, soFar = ""):
                      return elements(s.replace(e, "", 1), soFar + e.capitalize())
      
      return soFar
+
+
+
+def elemt(word, soFar = ""):
+    """Produces a tree of chemical symbols representing the possibilities for spelling the given word."""
+    
+    result = []
+    
+    s = word.lower()
+    
+    for e in slower:
+        if s.find(e) == 0:
+            result.append(e.capitalize())
+            rest = elemt(s.replace(e, "", 1), soFar + e.capitalize())
+            if rest: result.append(rest)
+    
+    return result
