@@ -1,0 +1,5 @@
+This Python script defines a function elements() that takes a string and spells the string with chemical symbols if possible.
+
+Data is from http://en.wikipedia.org/wiki/List_of_elements.
+The first field is atomic number, second is symbol of the element.
+
